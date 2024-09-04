@@ -1,5 +1,3 @@
-package creditcard;
-
 public class CreditCard {
     private String cardNumber;
     private double creditLimit;

@@ -1,5 +1,3 @@
-package creditcard;
-
 public class RewardAccount {
     private String rewardAccountId;
     private int rewardPoints;
