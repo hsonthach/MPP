@@ -1,4 +1,4 @@
-package lesson3.labs.prob3;
+package lab3.sol.prob3;
 
 public class Admin {
 	public static double computeTotalRent(Object[] properties) {

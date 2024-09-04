@@ -1,4 +1,4 @@
-package lesson3.labs.prob1;
+package lab3.sol.prob1;
 
 
 public class Person {

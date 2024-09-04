@@ -1,9 +1,9 @@
-package lesson3.labs.prob3;
+package lab3.sol.prob3;
 
-import lesson3.labsolns.prob3.Address;
-import lesson3.labsolns.prob3.Condo;
-import lesson3.labsolns.prob3.House;
-import lesson3.labsolns.prob3.Trailer;
+import lab3.sol.prob3.Address;
+import lab3.sol.prob3.Condo;
+import lab3.sol.prob3.House;
+import lab3.sol.prob3.Trailer;
 
 public class Driver {
 
