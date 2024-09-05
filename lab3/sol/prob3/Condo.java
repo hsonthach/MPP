@@ -2,14 +2,14 @@ package lab3.sol.prob3;
 
 
 
-public class Condo {
+public class Condo extends Property {
 	private Address address;
 	private int numberOfFloors;
 	public Address getAddress() {
 		return address;
 	}
 	public Condo(Address address, int numberOfFloors) {
-		this.address = address;
+		super(address);
 		this.numberOfFloors = numberOfFloors;
 	}
 
