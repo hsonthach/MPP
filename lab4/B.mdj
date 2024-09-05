@@ -1928,7 +1928,7 @@
 													"top": 47,
 													"width": 202.40087890625,
 													"height": 13,
-													"text": "CheckoutForm: CheckoutForm"
+													"text": "CheckoutForm"
 												},
 												{
 													"_type": "LabelView",
@@ -2040,9 +2040,9 @@
 													"font": "Arial;13;1",
 													"left": 557,
 													"top": 47,
-													"width": 261.62451171875,
+													"width": 281.12451171875,
 													"height": 13,
-													"text": "CheckoutController: CheckoutController"
+													"text": "theCheckoutController: CheckoutController"
 												},
 												{
 													"_type": "LabelView",
@@ -2073,7 +2073,7 @@
 											"font": "Arial;13;0",
 											"left": 552,
 											"top": 40,
-											"width": 271.62451171875,
+											"width": 291.12451171875,
 											"height": 40,
 											"stereotypeLabel": {
 												"$ref": "AAAAAAGRxBlewCESzck="
@@ -2098,7 +2098,7 @@
 												"$ref": "AAAAAAGRxBlevyEP3xI="
 											},
 											"font": "Arial;13;0",
-											"left": 687,
+											"left": 697,
 											"top": 81,
 											"width": 1,
 											"height": 959
@@ -2107,7 +2107,7 @@
 									"font": "Arial;13;0",
 									"left": 552,
 									"top": 40,
-									"width": 270.62451171875,
+									"width": 290.12451171875,
 									"height": 1000,
 									"nameCompartment": {
 										"$ref": "AAAAAAGRxBlewCERvIw="
@@ -2247,7 +2247,7 @@
 												"$ref": "AAAAAAGRxBqZmCFmrJk="
 											},
 											"font": "Arial;13;0",
-											"left": 412,
+											"left": 417,
 											"top": 209,
 											"width": 227.59521484375,
 											"height": 13,
@@ -2270,7 +2270,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 525,
+											"left": 530,
 											"top": 194,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -2291,7 +2291,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 525,
+											"left": 530,
 											"top": 229,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -2311,7 +2311,7 @@
 												"$ref": "AAAAAAGRxBqZmCFmrJk="
 											},
 											"font": "Arial;13;0",
-											"left": 680,
+											"left": 690,
 											"top": 225,
 											"width": 14,
 											"height": 28
@@ -2324,7 +2324,7 @@
 									"tail": {
 										"$ref": "AAAAAAGRxBkx5yD22z8="
 									},
-									"points": "371:225;680:225",
+									"points": "371:225;690:225",
 									"nameLabel": {
 										"$ref": "AAAAAAGRxBqZmCFo9Xw="
 									},
@@ -2474,7 +2474,7 @@
 												"$ref": "AAAAAAGRxBy/KSGmggQ="
 											},
 											"font": "Arial;13;0",
-											"left": 792,
+											"left": 797,
 											"top": 272,
 											"width": 78.04443359375,
 											"height": 13,
@@ -2497,7 +2497,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 831,
+											"left": 836,
 											"top": 257,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -2518,7 +2518,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 831,
+											"left": 836,
 											"top": 292,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -2551,7 +2551,7 @@
 									"tail": {
 										"$ref": "AAAAAAGRxBlewCEWYXg="
 									},
-									"points": "688:288;974:288",
+									"points": "698:288;974:288",
 									"nameLabel": {
 										"$ref": "AAAAAAGRxBy/KiGoW+Y="
 									},
@@ -4255,7 +4255,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGRxBkOESDaeG8="
 							},
-							"name": "CheckoutController",
+							"name": "theCheckoutController",
 							"represent": {
 								"$ref": "AAAAAAGRxBlevyEONZY="
 							},
@@ -4307,8 +4307,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGRxBkOESDZ9tM="
 					},
-					"name": "Role1",
-					"type": "CheckoutForm"
+					"name": "Role1"
 				},
 				{
 					"_type": "UMLAttribute",
