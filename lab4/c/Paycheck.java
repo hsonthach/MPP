@@ -1,6 +1,6 @@
 package lab4.c;
 
-public class Paycheck {
+public final class Paycheck {
 	private final double grossPay;
     private final double fica = 0.23;
     private final double state = 0.05;
