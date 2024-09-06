@@ -9,7 +9,7 @@ public class Main {
 		cm.addOrder(new Order("100", LocalDate.of(2023, 2, 10),100));
 		Employee[] emp = { new Salaried("121", 4000), new Hourly("122", 15.67, 20), cm};
 		for(Employee e :emp){
-			e.print(2, 2023);
+			e.print(3, 2023);
 			System.out.println();
 		}
 	}

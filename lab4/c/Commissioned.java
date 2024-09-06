@@ -26,7 +26,7 @@ public class Commissioned extends Employee {
 		int length = orders.size();
 		for (int i = 0; i < length; i++) {
 			Order order = orders.get(i);
-			LocalDate orderDate = order.getOrderDate();
+			LocalDate orderDate = order.getOrderDate().plusMonths(1);
 			if (!(orderDate.getMonthValue() == month && orderDate.getYear() == year)) { continue; }
 			orderTotal += order.getOrderAmount();
 		}
