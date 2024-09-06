@@ -23,8 +23,7 @@ public class Commissioned extends Employee {
 	@Override
 	public double calcGrossPay(int month, int year) {
 		double orderTotal = 0;
-		int length = orders.size();
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < orders.size(); i++) {
 			Order order = orders.get(i);
 			LocalDate orderDate = order.getOrderDate().plusMonths(1);
 			if (!(orderDate.getMonthValue() == month && orderDate.getYear() == year)) { continue; }
