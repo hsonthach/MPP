@@ -2,3 +2,5 @@
 out
 /**/bin/
 .vs
+/project/production
+/project/.metadata
