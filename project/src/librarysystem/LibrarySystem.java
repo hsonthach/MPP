@@ -25,7 +25,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JPanel mainPanel;
 	JMenuBar menuBar;
     JMenu options;
-    JMenuItem login, allBookIds, allMemberIds; 
+    JMenuItem login, allBookIds, allMemberIds, checkoutABook; 
     String pathToImage;
     private boolean isInitialized = false;
     
@@ -33,12 +33,24 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	LibrarySystem.INSTANCE,
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
-		AllBookIdsWindow.INSTANCE
+		AllBookIdsWindow.INSTANCE,
+		CheckouABook.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
 		for(LibWindow frame: allWindows) {
 			frame.setVisible(false);			
+		}
+	}
+	
+	public static void showUp(JFrame instance) {
+		for(LibWindow frame: allWindows) {
+			if (frame == instance) {
+				frame.setVisible(true);
+			}
+			else {
+				frame.setVisible(false);
+			}
 		}
 	}
      
@@ -86,9 +98,12 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allBookIds.addActionListener(new AllBookIdsListener());
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
+ 	   checkoutABook = new JMenuItem("Checkout a book");
+ 	   checkoutABook.addActionListener(new CheckoutABookListener());
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
+ 	   options.add(checkoutABook);
     }
     
     class LoginListener implements ActionListener {
@@ -152,10 +167,19 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			//AllMemberIdsWindow.INSTANCE.setSize(660,500);
 			Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
 			AllMemberIdsWindow.INSTANCE.setVisible(true);
-			
-			
+
 		}
     	
+    }
+    
+    class CheckoutABookListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.showUp(CheckouABook.INSTANCE);
+			CheckouABook.INSTANCE.pack();
+			CheckouABook.INSTANCE.init();
+			Util.centerFrameOnDesktop(CheckouABook.INSTANCE);
+		}
     }
 
 	@Override
