@@ -13,9 +13,9 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JTextField;
 
-public class CheckouABook extends JFrame implements LibWindow {
+public class CheckoutABook extends JFrame implements LibWindow {
 	private static final long serialVersionUID = 1L;
-	public static final CheckouABook INSTANCE = new CheckouABook();
+	public static final CheckoutABook INSTANCE = new CheckoutABook();
 	
 	private int width = 0, height = 0;
 	private boolean initialized = false;
@@ -28,7 +28,7 @@ public class CheckouABook extends JFrame implements LibWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CheckouABook frame = INSTANCE;
+					CheckoutABook frame = INSTANCE;
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class CheckouABook extends JFrame implements LibWindow {
 	/**
 	 * Create the frame.
 	 */
-	private CheckouABook() {
+	private CheckoutABook() {
 		setTitle("Checkout Book");
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setResizable(false);
@@ -75,7 +75,7 @@ public class CheckouABook extends JFrame implements LibWindow {
 			LibrarySystem.showUp(LibrarySystem.INSTANCE);
 	    });
 		btnMain.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnMain.setBounds(10, 402, 128, 31);
+		btnMain.setBounds(10, 402, 143, 31);
 		getContentPane().add(btnMain);
 	}
 

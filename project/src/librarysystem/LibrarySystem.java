@@ -3,6 +3,7 @@ package librarysystem;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
 		AllBookIdsWindow.INSTANCE,
-		CheckouABook.INSTANCE
+		CheckoutABook.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -99,7 +100,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
  	   checkoutABook = new JMenuItem("Checkout a book");
- 	   checkoutABook.addActionListener(new CheckoutABookListener());
+ 	   checkoutABook.addActionListener(new SwitchScreenListener<CheckoutABook>(CheckoutABook.INSTANCE));
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
@@ -172,13 +173,19 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	
     }
     
-    class CheckoutABookListener implements ActionListener{
+    class SwitchScreenListener<T extends JFrame & LibWindow> implements ActionListener{
+    	private T instance;
+    	
+    	SwitchScreenListener(T instance) {
+    		this.instance = instance;
+    	}
+    	
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LibrarySystem.showUp(CheckouABook.INSTANCE);
-			CheckouABook.INSTANCE.pack();
-			CheckouABook.INSTANCE.init();
-			Util.centerFrameOnDesktop(CheckouABook.INSTANCE);
+			LibrarySystem.showUp(instance);
+			instance.pack();
+			instance.init();
+			Util.centerFrameOnDesktop(instance);
 		}
     }
 
