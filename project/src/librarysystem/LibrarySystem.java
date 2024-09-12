@@ -119,11 +119,11 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			allBookIds.setEnabled(true);
 			checkoutABook.setEnabled(true);
 			addBookCopy.setEnabled(true);
+			addBookWindow.setEnabled(true);
 		}
 
 		if (role == Auth.ADMIN || role == Auth.BOTH) {
 			allMemberIds.setEnabled(true);
-			addBookWindow.setEnabled(true);
 		}
 	}
 
