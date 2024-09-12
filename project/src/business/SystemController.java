@@ -42,7 +42,12 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public void CheckoutBook(String memberId, String isbn) throws CheckoutException {
+	public void checkoutBook(String memberId, String isbn) throws CheckoutException {
 		// TODO Auto-generated method stub
+	}
+	@Override
+	public List<CheckoutEntry> getCheckoutEntry(String memberId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
