@@ -22,7 +22,7 @@ public class LoginWindow extends JFrame implements LibWindow{
     private static final long serialVersionUID = 1L;
 
     // Instance variables
-    private int width = 300, height = 200;
+    private int width = 400, height = 240;
     private boolean initialized = false;
 
     private JPasswordField passwordField;
