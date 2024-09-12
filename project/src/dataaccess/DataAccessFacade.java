@@ -10,16 +10,19 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import business.Author;
 import business.Book;
 import business.BookCopy;
+import business.CheckoutRecord;
 import business.LibraryMember;
 import dataaccess.DataAccessFacade.StorageType;
 
 public class DataAccessFacade implements DataAccess {
 
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS, CHECKOUTRECORDS;
 	}
 	// Windows user can use
 
@@ -47,6 +50,19 @@ public class DataAccessFacade implements DataAccess {
 		String isbn = book.getIsbn();
 		books.put(isbn, book);
 		saveToStorage(StorageType.BOOKS, books);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public HashMap<String, CheckoutRecord> readAllCheckoutRecords() {
+		Object obj = readFromStorage(StorageType.CHECKOUTRECORDS);
+		if (obj == null) return new HashMap<String, CheckoutRecord>();
+		return (HashMap<String, CheckoutRecord>) obj;
+	}
+
+	@Override
+	public void saveAllCheckoutRecords(HashMap<String, CheckoutRecord> items) {
+		saveToStorage(StorageType.CHECKOUTRECORDS, items);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -165,5 +181,4 @@ public class DataAccessFacade implements DataAccess {
 
 		private static final long serialVersionUID = 5399827794066637059L;
 	}
-
 }

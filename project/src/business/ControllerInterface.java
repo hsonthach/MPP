@@ -7,5 +7,5 @@ public interface ControllerInterface {
 	public List<String> allMemberIds();
 	public List<String> allBookIds();
 	public void checkoutBook(String memberId, String isbn) throws CheckoutException;
-	public List<CheckoutEntry> getCheckoutEntry(String memberId);
+	public Iterable<CheckoutEntry> getCheckoutEntry(String memberId);
 }

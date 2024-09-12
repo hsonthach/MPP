@@ -45,9 +45,10 @@ public class SystemController implements ControllerInterface {
 	public void checkoutBook(String memberId, String isbn) throws CheckoutException {
 		// TODO Auto-generated method stub
 	}
+	
 	@Override
-	public List<CheckoutEntry> getCheckoutEntry(String memberId) {
-		// TODO Auto-generated method stub
+	public Iterable<CheckoutEntry> getCheckoutEntry(String memberId) {
+		DataAccess da = new DataAccessFacade();
 		return null;
 	}
 }
