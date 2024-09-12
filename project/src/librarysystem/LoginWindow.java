@@ -10,6 +10,9 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import business.LoginException;
+import business.SystemController;
 import dataaccess.Auth;
 import dataaccess.User;
 
@@ -25,10 +28,7 @@ public class LoginWindow extends JFrame implements LibWindow{
     private JPasswordField passwordField;
     private JTextField textField;
 
-    // Hardcoded users for authentication purposes
-    private User librarian = new User("librarian", "lib123", Auth.LIBRARIAN);
-    private User admin = new User("admin", "admin123", Auth.ADMIN);
-    private User both = new User("both", "both123", Auth.BOTH);
+    private SystemController controller = new SystemController();
 
     /**
      * Launch the application.
@@ -146,13 +146,10 @@ public class LoginWindow extends JFrame implements LibWindow{
     /**
      * Authenticate user by checking username and password.
      */
-    private User authenticate(String username, String password) {
-        if (librarian.getId().equals(username) && librarian.getPassword().equals(password)) {
-            return librarian;
-        } else if (admin.getId().equals(username) && admin.getPassword().equals(password)) {
-            return admin;
-        } else if (both.getId().equals(username) && both.getPassword().equals(password)) {
-            return both;
+    private User authenticate(String username, String password)  {
+        User user = this.controller.findUserByUsernameAndPassword(username, password);
+        if (user != null) {
+            return user; // Authentication successful
         }
         return null; // Authentication failed
     }

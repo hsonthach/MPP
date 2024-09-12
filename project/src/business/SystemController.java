@@ -121,4 +121,15 @@ public class SystemController implements ControllerInterface {
 		return da.readBooksMap().values();
 	}
 
+	public User findUserByUsernameAndPassword(String username, String password){
+		DataAccess da = new DataAccessFacade();
+		HashMap<String, User> map = da.readUserMap();
+		if(map.containsKey(username)){
+			User user = map.get(username);
+			if(user.getPassword().equals(password)){
+				return user;
+			}
+		}
+		return null;
+	}
 }
