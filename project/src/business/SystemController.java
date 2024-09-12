@@ -41,5 +41,8 @@ public class SystemController implements ControllerInterface {
 		return retval;
 	}
 	
-	
+	@Override
+	public void CheckoutBook(String memberId, String isbn) throws CheckoutException {
+		// TODO Auto-generated method stub
+	}
 }
