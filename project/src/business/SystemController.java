@@ -51,6 +51,9 @@ public class SystemController implements ControllerInterface {
 	
 	@Override
 	public void checkoutBook(String memberId, String isbn, LocalDate checkoutDate) throws CheckoutException {
+		if (memberId == null || memberId.equals("")) throw new CheckoutException("Please input the Member ID");
+		if (isbn == null || isbn.equals("")) throw new CheckoutException("Please input the ISBN");
+		
 		DataAccess da = new DataAccessFacade();
 		HashMap<String, LibraryMember> membersMap = da.readMemberMap();
 		if (!membersMap.containsKey(memberId)) {
