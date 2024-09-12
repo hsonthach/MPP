@@ -2,6 +2,7 @@ package business;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -114,4 +115,10 @@ public class SystemController implements ControllerInterface {
 		book.addCopy();
 		da.saveNewBook(book);
 	}
+
+	public Collection<Book> getAllBooks() {
+		DataAccess da = new DataAccessFacade();
+		return da.readBooksMap().values();
+	}
+
 }
