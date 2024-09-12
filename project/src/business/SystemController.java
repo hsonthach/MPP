@@ -97,4 +97,10 @@ public class SystemController implements ControllerInterface {
 		
 		return new ArrayList<CheckoutEntry>();
 	}
+
+	@Override
+	public boolean findBookId(String text) {
+		DataAccess da = new DataAccessFacade();
+		return da.readBooksMap().containsKey(text);
+	}
 }

@@ -2,7 +2,6 @@ package librarysystem;
 
 import business.Address;
 import business.Author;
-import business.Book;
 import business.SystemController;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
@@ -12,9 +11,6 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AddBookWindow extends JFrame implements LibWindow {
 
@@ -42,7 +38,7 @@ public class AddBookWindow extends JFrame implements LibWindow {
 	private ArrayList<Author> authors;
 	private JLabel lblAuthors;
 	private JScrollPane authorsDisplay;
-	private final SystemController ci = new SystemController();
+	private final SystemController controller = new SystemController();
 
 	/**
 	 * Launch the application.
@@ -213,15 +209,72 @@ public class AddBookWindow extends JFrame implements LibWindow {
 		});
 		// Create new book when addNewBook button is clicked
 		addNewBook.addActionListener(evt -> {
+			if (!validateAddBook()) {
+				return;
+			}
 			extractAndSaveBook();
 			clearData();
 		});
 
 		addAuthorBtn.addActionListener(evt -> {
+			if (!validateAddAuthor()) {
+				return;
+			}
 			addAuthor();
 			displayAuthors();
 			clearAuthorFields();
 		});
+	}
+
+	private boolean validateAddAuthor() {
+		if (authorStreetAddress.getText().isEmpty() || textField.getText().isEmpty() || authorFirstName.getText().isEmpty() || authorLastName.getText().isEmpty() || authorTelephone.getText().isEmpty() || authorBio.getText().isEmpty() || authorCityAddress.getText().isEmpty() || authorStateAddress.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "Please fill out all fields");
+			return false;
+		}
+
+		// zip must be a number and 5 digits
+		if (!textField.getText().matches("[0-9]+") || textField.getText().length() != 5) {
+			JOptionPane.showMessageDialog(frame, "Zip must be a 5 digit number");
+			return false;
+		}
+		// phone must be number and 9 digits
+		if (!authorTelephone.getText().matches("[0-9]+") || authorTelephone.getText().length() != 9) {
+			JOptionPane.showMessageDialog(frame, "Phone must be a 9 digit number");
+			return false;
+		}
+
+
+		return true;
+	}
+
+	private boolean validateAddBook() {
+		if (this.controller.findBookId(isbn.getText())) {
+			JOptionPane.showMessageDialog(frame, "Book with ISBN " + isbn.getText() + " already exists");
+			return false;
+		}
+		if (isbn.getText().isEmpty() || title.getText().isEmpty() || maxoutLength.getText().isEmpty() || copyNum.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "Please fill out all fields");
+			return false;
+		}
+
+		// authors must be added
+		if (authors.isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "Please add at least one author");
+			return false;
+		}
+
+		// maxOutLength and copyNum must be a number
+		if (!maxoutLength.getText().matches("[0-9]+") || !copyNum.getText().matches("[0-9]+")) {
+			JOptionPane.showMessageDialog(frame, "Max out length and number of copies must be a number");
+			return false;
+		}
+
+		// maxOutLength is 7 or 21 only
+		if (!maxoutLength.getText().equals("7") && !maxoutLength.getText().equals("21")) {
+			JOptionPane.showMessageDialog(frame, "Max out length must be 7 or 21");
+			return false;
+		}
+		return true;
 	}
 
 	private void clearAuthorFields() {
@@ -252,7 +305,7 @@ public class AddBookWindow extends JFrame implements LibWindow {
 		String isbnText = isbn.getText();
 		String titleText = title.getText();
 
-		this.ci.saveBook(isbnText, titleText, maxoutLengthText, copyNumText, authors);
+		this.controller.saveBook(isbnText, titleText, maxoutLengthText, copyNumText, authors);
 	}
 
 	private void clearData() {
