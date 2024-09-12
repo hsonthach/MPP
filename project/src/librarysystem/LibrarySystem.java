@@ -37,7 +37,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		AllBookIdsWindow.INSTANCE,
 		CheckoutABook.INSTANCE
 	};
-    	
+	private JMenuItem addBookWindow;
+
 	public static void hideAllWindows() {		
 		for(LibWindow frame: allWindows) {
 			frame.setVisible(false);			
@@ -101,10 +102,14 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
  	   checkoutABook = new JMenuItem("Checkout a book");
  	   checkoutABook.addActionListener(new SwitchScreenListener<CheckoutABook>(CheckoutABook.INSTANCE));
+	   addBookWindow = new JMenuItem("Add Book");
+	   addBookWindow.addActionListener(new SwitchScreenListener<AddBookWindow>(AddBookWindow.INSTANCE));
+
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
  	   options.add(checkoutABook);
+		options.add(addBookWindow);
     }
     
     class LoginListener implements ActionListener {
@@ -172,7 +177,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		}
     	
     }
-    
+
     class SwitchScreenListener<T extends JFrame & LibWindow> implements ActionListener{
     	private T instance;
     	

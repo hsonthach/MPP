@@ -14,8 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.awt.Component;
 
-public class AddBookWindow {
+public class AddBookWindow extends JFrame implements LibWindow {
 
+	public static final AddBookWindow INSTANCE = new AddBookWindow();
 	private JFrame frame;
 	private JTextField isbn;
 	private JTextField title;
@@ -279,6 +280,21 @@ public class AddBookWindow {
 		}
 		authorsDisplay.setViewportView(new JTable(tableModel));
 	}
-	private static void addPopup(Component component, final JPopupMenu popup) {
+
+	@Override
+	public void init() {
+		frame.setVisible(true);
+
+
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return false;
+	}
+
+	@Override
+	public void isInitialized(boolean val) {
+
 	}
 }
