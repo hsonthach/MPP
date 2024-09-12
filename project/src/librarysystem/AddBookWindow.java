@@ -207,12 +207,9 @@ public class AddBookWindow extends JFrame implements LibWindow {
 
 		displayAuthors();
 
-		btnBackToMain.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LibrarySystem.hideAllWindows();
-				LibrarySystem.INSTANCE.setVisible(true);
-			}
+		btnBackToMain.addActionListener(evt -> {
+			AddBookWindow.INSTANCE.frame.setVisible(false);
+			LibrarySystem.INSTANCE.setVisible(true);
 		});
 		// Create new book when addNewBook button is clicked
 		addNewBook.addActionListener(evt -> {
