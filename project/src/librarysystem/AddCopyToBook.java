@@ -79,7 +79,7 @@ public class AddCopyToBook extends JFrame implements LibWindow {
         frame.getContentPane().add(btnBackToMenu);
 
         btnBackToMenu.addActionListener(evt -> {
-            AddCopyToBook.INSTANCE.setVisible(false);
+            AddCopyToBook.INSTANCE.frame.setVisible(false);
             LibrarySystem.INSTANCE.setVisible(true);
         });
 
@@ -106,6 +106,12 @@ public class AddCopyToBook extends JFrame implements LibWindow {
         // number of copies should be number
         if (!isbnStr.matches("\\d+")) {
             JOptionPane.showMessageDialog(frame, "Number of copies should be a number");
+            return false;
+        }
+
+        // ISBN should be in the system
+        if (!this.controller.findBookId(isbnStr)) {
+            JOptionPane.showMessageDialog(frame, "ISBN " + isbnStr + " not found");
             return false;
         }
         return true;
