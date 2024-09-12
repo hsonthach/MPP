@@ -4,18 +4,19 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.Font;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
+import java.time.LocalDate;
+
+import business.CheckoutException;
+import business.ControllerInterface;
+import business.SystemController;
+
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 
@@ -23,6 +24,7 @@ public class CheckoutABook extends JFrame implements LibWindow {
 	private static final long serialVersionUID = 1L;
 	public static final CheckoutABook INSTANCE = new CheckoutABook();
 	
+	private ControllerInterface ci = new SystemController();
 	private int width = 0, height = 0;
 	private boolean initialized = false;
 	private JTextField txtMemberId;
@@ -124,7 +126,6 @@ public class CheckoutABook extends JFrame implements LibWindow {
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.addActionListener(evt -> {
 			checkoutBook();
-			clearForm();
 			txtMemberId.grabFocus();
 	    });
 		btnCheckout.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -152,5 +153,11 @@ public class CheckoutABook extends JFrame implements LibWindow {
 	}
 	
 	private void checkoutBook() {
+		try {
+			ci.checkoutBook(txtMemberId.getText(), txtIsbn.getText(), LocalDate.now());
+		}
+		catch (CheckoutException ex) {
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
 	}
 }
