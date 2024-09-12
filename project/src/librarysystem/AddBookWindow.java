@@ -13,6 +13,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddBookWindow extends JFrame implements LibWindow {
 
@@ -199,8 +201,16 @@ public class AddBookWindow extends JFrame implements LibWindow {
 		authorsDisplay.setBounds(76, 140, 941, 94);
 		frame.getContentPane().add(authorsDisplay);
 
+		JButton btnBackToMain = new JButton("Back to Main");
+		btnBackToMain.setBounds(272, 496, 150, 25);
+		frame.getContentPane().add(btnBackToMain);
+
 		displayAuthors();
 
+		btnBackToMain.addActionListener(evt -> {
+			AddBookWindow.INSTANCE.frame.setVisible(false);
+			LibrarySystem.INSTANCE.setVisible(true);
+		});
 		// Create new book when addNewBook button is clicked
 		addNewBook.addActionListener(evt -> {
 			extractAndSaveBook();

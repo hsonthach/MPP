@@ -10,8 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.EventQueue;
 import java.util.Collection;
 
-public class AddCopyToBook {
+public class AddCopyToBook extends JFrame implements LibWindow {
 
+	public static final AddCopyToBook INSTANCE = new AddCopyToBook();
 	private JFrame frame;
 	private JTextField textField;
 
@@ -62,13 +63,23 @@ public class AddCopyToBook {
 		frame.getContentPane().add(isbn);
 
 		JButton addCopyBtn = new JButton("Add copy");
-		addCopyBtn.setBounds(182, 194, 89, 23);
+		addCopyBtn.setBounds(228, 150, 89, 23);
 		frame.getContentPane().add(addCopyBtn);
 
 		textField = new JTextField();
 		textField.setBounds(113, 151, 96, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
+
+
+		JButton btnBackToMenu = new JButton("Back to menu");
+		btnBackToMenu.setBounds(571, 122, 193, 37);
+		frame.getContentPane().add(btnBackToMenu);
+
+		btnBackToMenu.addActionListener(evt -> {
+			AddCopyToBook.INSTANCE.setVisible(false);
+			LibrarySystem.INSTANCE.setVisible(true);
+		});
 
 		addCopyBtn.addActionListener(evt -> {
 			String isbnStr = textField.getText();
@@ -120,5 +131,20 @@ public class AddCopyToBook {
 
 		JTable table = new JTable(tableModel);
 		booksDisplay.setViewportView(table);
+	}
+
+	@Override
+	public void init() {
+		frame.setVisible(true);
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return false;
+	}
+
+	@Override
+	public void isInitialized(boolean val) {
+
 	}
 }
