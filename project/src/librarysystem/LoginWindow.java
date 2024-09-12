@@ -7,15 +7,21 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import dataaccess.Auth;
 import dataaccess.User;
 
-public class LoginWindow {
+public class LoginWindow extends JFrame implements LibWindow{
 
-    private JFrame frame;
+    public static final LoginWindow INSTANCE = new LoginWindow();
+    private static final long serialVersionUID = 1L;
+
+    // Instance variables
+    private int width = 640, height = 480;
+    private boolean initialized = false;
+
     private JPasswordField passwordField;
     private JTextField textField;
 
@@ -31,8 +37,8 @@ public class LoginWindow {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    LoginWindow window = new LoginWindow();
-                    window.frame.setVisible(true);
+                    LoginWindow frame = INSTANCE;
+                    frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -43,33 +49,39 @@ public class LoginWindow {
     /**
      * Create the application.
      */
-    public LoginWindow() {
-        initialize();
+    private LoginWindow() {
+        setTitle("Login");
+        setResizable(false);
+        init();
     }
 
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize() {
-        frame = new JFrame();
-        frame.setTitle("Library System Login");
-        frame.setBounds(100, 100, 423, 179);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+    public void init() {
+        if (isInitialized()) {
+            setSize(width, height);
+            return;
+        }
+        isInitialized(true);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 640, 480);
+        getContentPane().setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Username");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lblNewLabel.setBounds(10, 10, 102, 29);
-        frame.getContentPane().add(lblNewLabel);
+        getContentPane().add(lblNewLabel);
 
         JLabel lblPassword = new JLabel("Password");
         lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lblPassword.setBounds(219, 10, 102, 29);
-        frame.getContentPane().add(lblPassword);
+        getContentPane().add(lblPassword);
 
         passwordField = new JPasswordField();
         passwordField.setBounds(219, 37, 150, 25);
-        frame.getContentPane().add(passwordField);
+        getContentPane().add(passwordField);
 
         JButton btnNewButton = new JButton("Login");
         btnNewButton.addActionListener(new ActionListener() {
@@ -82,21 +94,31 @@ public class LoginWindow {
 
                 if (authenticatedUser != null) {
                     // Successful login
-                    JOptionPane.showMessageDialog(frame, "Welcome, " + authenticatedUser.getId() + " (" + authenticatedUser.getAuthorization() + ")");
+                    JOptionPane.showMessageDialog(LoginWindow.this,
+                            "Welcome, " + authenticatedUser.getId() + " (" + authenticatedUser.getAuthorization() + ")");
                 } else {
                     // Failed login
-                    JOptionPane.showMessageDialog(frame, "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(LoginWindow.this,
+                            "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnNewButton.setBounds(141, 84, 100, 30);
-        frame.getContentPane().add(btnNewButton);
+        getContentPane().add(btnNewButton);
 
         textField = new JTextField();
         textField.setBounds(10, 37, 150, 25);
-        frame.getContentPane().add(textField);
+        getContentPane().add(textField);
         textField.setColumns(10);
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void isInitialized(boolean val) {
+        initialized = val;
     }
 
     /**
