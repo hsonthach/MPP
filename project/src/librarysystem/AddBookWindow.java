@@ -8,12 +8,14 @@ import dataaccess.DataAccessFacade;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JLabel;
-import javax.swing.JButton;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AddBookWindow {
 
@@ -37,6 +39,9 @@ public class AddBookWindow {
 	private JTextField authorCityAddress;
 	private JLabel lblAuthorStateAddress;
 	private JTextField authorStateAddress;
+	private ArrayList<Author> authors;
+	private JLabel lblAuthors;
+	private JScrollPane authorsDisplay;
 
 	/**
 	 * Launch the application.
@@ -66,12 +71,24 @@ public class AddBookWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 762, 634);
+
+		this.authors = new ArrayList<>();
+
+		DataAccess da = new DataAccessFacade();
+
+
+		// Add "Add Author" button
+		JButton addAuthorBtn = new JButton("Add Author");
+		addAuthorBtn.setBounds(718, 350, 150, 25);
+		frame.getContentPane().add(addAuthorBtn);
+
+
+		frame.setBounds(100, 100, 1115, 735);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		isbn = new JTextField();
-		isbn.setBounds(78, 85, 96, 20);
+		isbn.setBounds(78, 74, 96, 20);
 		frame.getContentPane().add(isbn);
 		isbn.setColumns(10);
 		
@@ -80,106 +97,106 @@ public class AddBookWindow {
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblTitle = new JLabel("Title");
-		lblTitle.setBounds(78, 140, 49, 14);
+		lblTitle.setBounds(439, 49, 49, 14);
 		frame.getContentPane().add(lblTitle);
 		
 		title = new JTextField();
 		title.setColumns(10);
-		title.setBounds(78, 165, 96, 20);
+		title.setBounds(439, 74, 96, 20);
 		frame.getContentPane().add(title);
 		
 		JLabel lblMaxOutLength = new JLabel("Max out length");
-		lblMaxOutLength.setBounds(285, 49, 133, 14);
+		lblMaxOutLength.setBounds(197, 49, 133, 14);
 		frame.getContentPane().add(lblMaxOutLength);
 		
 		maxoutLength = new JTextField();
 		maxoutLength.setColumns(10);
-		maxoutLength.setBounds(287, 85, 96, 20);
+		maxoutLength.setBounds(207, 74, 96, 20);
 		frame.getContentPane().add(maxoutLength);
 		
 		JButton addNewBook = new JButton("Add new book");
-		addNewBook.setBounds(313, 467, 152, 23);
+		addNewBook.setBounds(583, 73, 152, 23);
 		frame.getContentPane().add(addNewBook);
 		
 		JLabel lblNumberOfCopy = new JLabel("Number of copy");
-		lblNumberOfCopy.setBounds(460, 49, 133, 14);
+		lblNumberOfCopy.setBounds(310, 49, 133, 14);
 		frame.getContentPane().add(lblNumberOfCopy);
 		
 		copyNum = new JTextField();
 		copyNum.setColumns(10);
-		copyNum.setBounds(460, 85, 96, 20);
+		copyNum.setBounds(313, 74, 96, 20);
 		frame.getContentPane().add(copyNum);
 		
 		JLabel label = new JLabel("Author Street Address");
-		label.setBounds(249, 278, 119, 14);
+		label.setBounds(249, 327, 119, 14);
 		frame.getContentPane().add(label);
 		
 		authorStreetAddress = new JTextField();
 		authorStreetAddress.setColumns(10);
-		authorStreetAddress.setBounds(249, 303, 96, 20);
+		authorStreetAddress.setBounds(249, 352, 96, 20);
 		frame.getContentPane().add(authorStreetAddress);
 		
 		authorZip = new JLabel("Author Zip");
-		authorZip.setBounds(76, 356, 119, 14);
+		authorZip.setBounds(784, 271, 119, 14);
 		frame.getContentPane().add(authorZip);
 		
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(68, 381, 96, 20);
+		textField.setBounds(784, 296, 96, 20);
 		frame.getContentPane().add(textField);
 		
 		lblAuthorFirstName = new JLabel("Author First name");
-		lblAuthorFirstName.setBounds(231, 140, 119, 14);
+		lblAuthorFirstName.setBounds(249, 271, 119, 14);
 		frame.getContentPane().add(lblAuthorFirstName);
 		
 		lblAuthorLastName = new JLabel("Author last name");
-		lblAuthorLastName.setBounds(392, 140, 119, 14);
+		lblAuthorLastName.setBounds(378, 271, 119, 14);
 		frame.getContentPane().add(lblAuthorLastName);
 		
 		lblAuthorTelephone = new JLabel("Author telephone");
-		lblAuthorTelephone.setBounds(544, 140, 119, 14);
+		lblAuthorTelephone.setBounds(526, 271, 119, 14);
 		frame.getContentPane().add(lblAuthorTelephone);
 		
 		authorFirstName = new JTextField();
 		authorFirstName.setColumns(10);
-		authorFirstName.setBounds(231, 165, 96, 20);
+		authorFirstName.setBounds(249, 296, 96, 20);
 		frame.getContentPane().add(authorFirstName);
 		
 		authorLastName = new JTextField();
 		authorLastName.setColumns(10);
-		authorLastName.setBounds(388, 165, 96, 20);
+		authorLastName.setBounds(378, 296, 96, 20);
 		frame.getContentPane().add(authorLastName);
 		
 		authorTelephone = new JTextField();
 		authorTelephone.setColumns(10);
-		authorTelephone.setBounds(537, 165, 96, 20);
+		authorTelephone.setBounds(526, 296, 96, 20);
 		frame.getContentPane().add(authorTelephone);
 		
 		lblAuthorBio = new JLabel("Author bio");
-		lblAuthorBio.setBounds(68, 278, 119, 14);
+		lblAuthorBio.setBounds(655, 271, 119, 14);
 		frame.getContentPane().add(lblAuthorBio);
 		
 		authorBio = new JTextField();
 		authorBio.setColumns(10);
-		authorBio.setBounds(65, 303, 96, 20);
+		authorBio.setBounds(655, 296, 96, 20);
 		frame.getContentPane().add(authorBio);
 		
 		lblAuthorCityaddress = new JLabel("Author City Address");
-		lblAuthorCityaddress.setBounds(378, 278, 119, 14);
+		lblAuthorCityaddress.setBounds(378, 327, 119, 14);
 		frame.getContentPane().add(lblAuthorCityaddress);
 		
 		authorCityAddress = new JTextField();
 		authorCityAddress.setColumns(10);
-		authorCityAddress.setBounds(378, 303, 96, 20);
+		authorCityAddress.setBounds(378, 352, 96, 20);
 		frame.getContentPane().add(authorCityAddress);
 		
 		lblAuthorStateAddress = new JLabel("Author State Address");
-		lblAuthorStateAddress.setBounds(526, 278, 119, 14);
+		lblAuthorStateAddress.setBounds(526, 327, 119, 14);
 		frame.getContentPane().add(lblAuthorStateAddress);
 		
 		authorStateAddress = new JTextField();
 		authorStateAddress.setColumns(10);
-		authorStateAddress.setBounds(526, 303, 96, 20);
+		authorStateAddress.setBounds(526, 352, 96, 20);
 		frame.getContentPane().add(authorStateAddress);
 
 
@@ -195,26 +212,65 @@ public class AddBookWindow {
 			// create book
 			Book book = new Book(isbn.getText(), title.getText(), Integer.parseInt(maxoutLength.getText()), Integer.parseInt(copyNum.getText()), List.copyOf(List.of(author)));
 
-			// save book to database
-			DataAccess da = new DataAccessFacade();
 			da.saveNewBook(book);
 
-			// clear all fields
-			isbn.setText("");
-			title.setText("");
-			maxoutLength.setText("");
-			copyNum.setText("");
-			authorStreetAddress.setText("");
-			textField.setText("");
-			authorFirstName.setText("");
-			authorLastName.setText("");
-			authorTelephone.setText("");
-			authorBio.setText("");
-			authorCityAddress.setText("");
-			authorStateAddress.setText("");
+			clearData();
 
+		});
+
+		addAuthorBtn.addActionListener(evt -> {
+			System.out.println("Add author button clicked");
+			// create address
+			Address address = new Address(authorStreetAddress.getText(), authorCityAddress.getText(), authorStateAddress.getText(), textField.getText());
+
+			// create author
+			Author author = new Author(authorFirstName.getText(), authorLastName.getText(), authorTelephone.getText(), address, authorBio.getText());
+
+			authors.add(author);
+			authorsDisplay = new JScrollPane();
+			authorsDisplay.setBounds(76, 140, 941, 94);
+			frame.getContentPane().add(authorsDisplay);
+
+			displayAuthors(da);
 		});
 
 	}
 
+	private void clearData() {
+		// clear all fields
+		isbn.setText("");
+		title.setText("");
+		maxoutLength.setText("");
+		copyNum.setText("");
+		authorStreetAddress.setText("");
+		textField.setText("");
+		authorFirstName.setText("");
+		authorLastName.setText("");
+		authorTelephone.setText("");
+		authorBio.setText("");
+		authorCityAddress.setText("");
+		authorStateAddress.setText("");
+
+		lblAuthors = new JLabel("Authors");
+		lblAuthors.setBounds(249, 115, 119, 14);
+		frame.getContentPane().add(lblAuthors);
+		this.authors = new ArrayList<>();
+	}
+
+	private void displayAuthors(DataAccess da) {
+		// Define column names for the table
+		String[] columnNames = {"First Name", "Last Name", "Telephone", "Street Address", "City", "State", "Zip", "Bio"};
+
+		// Create a table model and set column names
+		DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+
+		// Populate the table model with book data
+		for (Author author : authors) {
+			String[] data = {author.getFirstName(), author.getLastName(), author.getTelephone(), author.getAddress().getStreet(), author.getAddress().getCity(), author.getAddress().getState(), author.getAddress().getZip(), author.getBio()};
+			tableModel.addRow(data);
+		}
+		authorsDisplay.setViewportView(new JTable(tableModel));
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+	}
 }
