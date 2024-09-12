@@ -1,196 +1,137 @@
 package librarysystem;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-
-import javax.swing.Box;
-import javax.swing.JButton;
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.Font;
 import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
+import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.JOptionPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import dataaccess.Auth;
+import dataaccess.User;
 
-import business.ControllerInterface;
+public class LoginWindow extends JFrame implements LibWindow{
 
-import business.SystemController;
-
-
-public class LoginWindow extends JFrame implements LibWindow {
     public static final LoginWindow INSTANCE = new LoginWindow();
-	
-	private boolean isInitialized = false;
-	
-	private JPanel mainPanel;
-	private JPanel upperHalf;
-	private JPanel middleHalf;
-	private JPanel lowerHalf;
-	private JPanel container;
-	
-	private JPanel topPanel;
-	private JPanel middlePanel;
-	private JPanel lowerPanel;
-	private JPanel leftTextPanel;
-	private JPanel rightTextPanel;
-	
-	private JTextField username;
-	private JTextField password;
-	private JLabel label;
-	private JButton loginButton;
-	private JButton logoutButton;
-	
-	
-	
-	
-	public boolean isInitialized() {
-		return isInitialized;
-	}
-	public void isInitialized(boolean val) {
-		isInitialized = val;
-	}
-	private JTextField messageBar = new JTextField();
-	public void clear() {
-		messageBar.setText("");
-	}
-	
-	/* This class is a singleton */
-    private LoginWindow () {}
-    
-    public void init() {     		
-    		mainPanel = new JPanel();
-    		defineUpperHalf();
-    		defineMiddleHalf();
-    		defineLowerHalf();
-    		BorderLayout bl = new BorderLayout();
-    		bl.setVgap(30);
-    		mainPanel.setLayout(bl);
-    					
-    		mainPanel.add(upperHalf, BorderLayout.NORTH);
-    		mainPanel.add(middleHalf, BorderLayout.CENTER);
-    		mainPanel.add(lowerHalf, BorderLayout.SOUTH);
-    		getContentPane().add(mainPanel);
-    		isInitialized(true);
-    		pack();
-    		//setSize(660, 500);
+    private static final long serialVersionUID = 1L;
 
-    	
+    // Instance variables
+    private int width = 640, height = 480;
+    private boolean initialized = false;
+
+    private JPasswordField passwordField;
+    private JTextField textField;
+
+    // Hardcoded users for authentication purposes
+    private User librarian = new User("librarian", "lib123", Auth.LIBRARIAN);
+    private User admin = new User("admin", "admin123", Auth.ADMIN);
+    private User both = new User("both", "both123", Auth.BOTH);
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    LoginWindow frame = INSTANCE;
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
-    private void defineUpperHalf() {
-    		
-    		upperHalf = new JPanel();
-    		upperHalf.setLayout(new BorderLayout());
-    		defineTopPanel();
-    		defineMiddlePanel();
-    		defineLowerPanel();
-    		upperHalf.add(topPanel, BorderLayout.NORTH);
-    		upperHalf.add(middlePanel, BorderLayout.CENTER);
-    		upperHalf.add(lowerPanel, BorderLayout.SOUTH);
-    		
-    	}
-    	private void defineMiddleHalf() {
-    		middleHalf = new JPanel();
-    		middleHalf.setLayout(new BorderLayout());
-    		JSeparator s = new JSeparator();
-    		s.setOrientation(SwingConstants.HORIZONTAL);
-    		//middleHalf.add(Box.createRigidArea(new Dimension(0,50)));
-    		middleHalf.add(s, BorderLayout.SOUTH);
-    		
-    	}
-    	private void defineLowerHalf() {
 
-    		lowerHalf = new JPanel();
-    		lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
-    		
-    		JButton backButton = new JButton("<= Back to Main");
-    		addBackButtonListener(backButton);
-    		lowerHalf.add(backButton);
-    		
-    	}
-    	private void defineTopPanel() {
-    		topPanel = new JPanel();
-    		JPanel intPanel = new JPanel(new BorderLayout());
-    		intPanel.add(Box.createRigidArea(new Dimension(0,20)), BorderLayout.NORTH);
-    		JLabel loginLabel = new JLabel("Login");
-    		Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
-    		intPanel.add(loginLabel, BorderLayout.CENTER);
-    		topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    		topPanel.add(intPanel);
-    		
-    	}
-    	
-    	
-    	
-    	private void defineMiddlePanel() {
-    		middlePanel=new JPanel();
-    		middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    		defineLeftTextPanel();
-    		defineRightTextPanel();
-    		middlePanel.add(leftTextPanel);
-    		middlePanel.add(rightTextPanel);
-    	}
-    	private void defineLowerPanel() {
-    		lowerPanel = new JPanel();
-    		loginButton = new JButton("Login");
-    		addLoginButtonListener(loginButton);
-    		lowerPanel.add(loginButton);
-    	}
+    /**
+     * Create the application.
+     */
+    private LoginWindow() {
+        setTitle("Login");
+        setResizable(false);
+        init();
+    }
 
-    	private void defineLeftTextPanel() {
-    		
-    		JPanel topText = new JPanel();
-    		JPanel bottomText = new JPanel();
-    		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-    		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));		
-    		
-    		username = new JTextField(10);
-    		label = new JLabel("Username");
-    		label.setFont(Util.makeSmallFont(label.getFont()));
-    		topText.add(username);
-    		bottomText.add(label);
-    		
-    		leftTextPanel = new JPanel();
-    		leftTextPanel.setLayout(new BorderLayout());
-    		leftTextPanel.add(topText,BorderLayout.NORTH);
-    		leftTextPanel.add(bottomText,BorderLayout.CENTER);
-    	}
-    	private void defineRightTextPanel() {
-    		
-    		JPanel topText = new JPanel();
-    		JPanel bottomText = new JPanel();
-    		topText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));
-    		bottomText.setLayout(new FlowLayout(FlowLayout.LEFT,5,0));		
-    		
-    		password = new JPasswordField(10);
-    		label = new JLabel("Password");
-    		label.setFont(Util.makeSmallFont(label.getFont()));
-    		topText.add(password);
-    		bottomText.add(label);
-    		
-    		rightTextPanel = new JPanel();
-    		rightTextPanel.setLayout(new BorderLayout());
-    		rightTextPanel.add(topText,BorderLayout.NORTH);
-    		rightTextPanel.add(bottomText,BorderLayout.CENTER);
-    	}
-    	
-    	private void addBackButtonListener(JButton butn) {
-    		butn.addActionListener(evt -> {
-    			LibrarySystem.hideAllWindows();
-    			LibrarySystem.INSTANCE.setVisible(true);
-    		});
-    	}
-    	
-    	private void addLoginButtonListener(JButton butn) {
-    		butn.addActionListener(evt -> {
-    			JOptionPane.showMessageDialog(this,"Successful Login");
-    				
-    		});
-    	}
-	
-        
-    
+    /**
+     * Initialize the contents of the frame.
+     */
+    public void init() {
+        if (isInitialized()) {
+            setSize(width, height);
+            return;
+        }
+        isInitialized(true);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 640, 480);
+        getContentPane().setLayout(null);
+
+        JLabel lblNewLabel = new JLabel("Username");
+        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        lblNewLabel.setBounds(10, 10, 102, 29);
+        getContentPane().add(lblNewLabel);
+
+        JLabel lblPassword = new JLabel("Password");
+        lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        lblPassword.setBounds(219, 10, 102, 29);
+        getContentPane().add(lblPassword);
+
+        passwordField = new JPasswordField();
+        passwordField.setBounds(219, 37, 150, 25);
+        getContentPane().add(passwordField);
+
+        JButton btnNewButton = new JButton("Login");
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = textField.getText();
+                String password = new String(passwordField.getPassword());
+
+                // Perform authentication check
+                User authenticatedUser = authenticate(username, password);
+
+                if (authenticatedUser != null) {
+                    // Successful login
+                    JOptionPane.showMessageDialog(LoginWindow.this,
+                            "Welcome, " + authenticatedUser.getId() + " (" + authenticatedUser.getAuthorization() + ")");
+                } else {
+                    // Failed login
+                    JOptionPane.showMessageDialog(LoginWindow.this,
+                            "Invalid username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnNewButton.setBounds(141, 84, 100, 30);
+        getContentPane().add(btnNewButton);
+
+        textField = new JTextField();
+        textField.setBounds(10, 37, 150, 25);
+        getContentPane().add(textField);
+        textField.setColumns(10);
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void isInitialized(boolean val) {
+        initialized = val;
+    }
+
+    /**
+     * Authenticate user by checking username and password.
+     */
+    private User authenticate(String username, String password) {
+        if (librarian.getId().equals(username) && librarian.getPassword().equals(password)) {
+            return librarian;
+        } else if (admin.getId().equals(username) && admin.getPassword().equals(password)) {
+            return admin;
+        } else if (both.getId().equals(username) && both.getPassword().equals(password)) {
+            return both;
+        }
+        return null; // Authentication failed
+    }
 }
