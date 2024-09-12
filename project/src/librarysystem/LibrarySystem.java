@@ -35,7 +35,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
 		AllBookIdsWindow.INSTANCE,
-		CheckoutABook.INSTANCE
+		CheckoutABook.INSTANCE,
+		AddBookWindow.INSTANCE
 	};
 	private JMenuItem addBookWindow;
 
