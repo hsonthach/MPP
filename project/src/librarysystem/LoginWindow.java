@@ -22,7 +22,7 @@ public class LoginWindow extends JFrame implements LibWindow{
     private static final long serialVersionUID = 1L;
 
     // Instance variables
-    private int width = 640, height = 480;
+    private int width = 300, height = 200;
     private boolean initialized = false;
 
     private JPasswordField passwordField;
@@ -66,7 +66,7 @@ public class LoginWindow extends JFrame implements LibWindow{
         isInitialized(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 640, 480);
+        setBounds(100, 100, 400, 240);
         getContentPane().setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Username");
