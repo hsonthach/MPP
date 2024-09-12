@@ -22,4 +22,6 @@ public interface DataAccess {
 	public HashMap<String, CheckoutRecord> readAllCheckoutRecords();
 	
 	public void saveAllCheckoutRecords(HashMap<String, CheckoutRecord> items);
+	
+	public void saveBooksMap(HashMap<String, Book> booksMap);
 }

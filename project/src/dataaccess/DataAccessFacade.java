@@ -65,6 +65,11 @@ public class DataAccessFacade implements DataAccess {
 		saveToStorage(StorageType.CHECKOUTRECORDS, items);
 	}
 
+	@Override
+	public void saveBooksMap(HashMap<String, Book> booksMap) {
+		saveToStorage(StorageType.BOOKS, booksMap);
+	}
+
 	@SuppressWarnings("unchecked")
 	public HashMap<String, Book> readBooksMap() {
 		// Returns a Map with name/value pairs being
