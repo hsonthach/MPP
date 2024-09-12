@@ -3,6 +3,7 @@ package librarysystem;
 import business.Address;
 import business.Author;
 import business.Book;
+import business.SystemController;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 
@@ -10,12 +11,8 @@ import java.awt.EventQueue;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.List;
 import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class AddBookWindow {
 
@@ -42,6 +39,7 @@ public class AddBookWindow {
 	private ArrayList<Author> authors;
 	private JLabel lblAuthors;
 	private JScrollPane authorsDisplay;
+	private final SystemController ci = new SystemController();
 
 	/**
 	 * Launch the application.
@@ -73,9 +71,6 @@ public class AddBookWindow {
 		frame = new JFrame();
 
 		this.authors = new ArrayList<>();
-
-		DataAccess da = new DataAccessFacade();
-
 
 		// Add "Add Author" button
 		JButton addAuthorBtn = new JButton("Add Author");
@@ -111,7 +106,7 @@ public class AddBookWindow {
 		
 		maxoutLength = new JTextField();
 		maxoutLength.setColumns(10);
-		maxoutLength.setBounds(207, 74, 96, 20);
+		maxoutLength.setBounds(197, 74, 96, 20);
 		frame.getContentPane().add(maxoutLength);
 		
 		JButton addNewBook = new JButton("Add new book");
@@ -119,12 +114,12 @@ public class AddBookWindow {
 		frame.getContentPane().add(addNewBook);
 		
 		JLabel lblNumberOfCopy = new JLabel("Number of copy");
-		lblNumberOfCopy.setBounds(310, 49, 133, 14);
+		lblNumberOfCopy.setBounds(321, 49, 133, 14);
 		frame.getContentPane().add(lblNumberOfCopy);
 		
 		copyNum = new JTextField();
 		copyNum.setColumns(10);
-		copyNum.setBounds(313, 74, 96, 20);
+		copyNum.setBounds(320, 74, 96, 20);
 		frame.getContentPane().add(copyNum);
 		
 		JLabel label = new JLabel("Author Street Address");
@@ -199,41 +194,54 @@ public class AddBookWindow {
 		authorStateAddress.setBounds(526, 352, 96, 20);
 		frame.getContentPane().add(authorStateAddress);
 
+		authorsDisplay = new JScrollPane();
+		authorsDisplay.setBounds(76, 140, 941, 94);
+		frame.getContentPane().add(authorsDisplay);
+
+		displayAuthors();
 
 		// Create new book when addNewBook button is clicked
 		addNewBook.addActionListener(evt -> {
-			System.out.println("Add new book button clicked");
-			// create address
-			Address address = new Address(authorStreetAddress.getText(), authorCityAddress.getText(), authorStateAddress.getText(), textField.getText());
-
-			// create author
-			Author author = new Author(authorFirstName.getText(), authorLastName.getText(), authorTelephone.getText(), address, authorBio.getText());
-
-			// create book
-			Book book = new Book(isbn.getText(), title.getText(), Integer.parseInt(maxoutLength.getText()), Integer.parseInt(copyNum.getText()), List.copyOf(List.of(author)));
-
-			da.saveNewBook(book);
-
+			extractAndSaveBook();
 			clearData();
-
 		});
 
 		addAuthorBtn.addActionListener(evt -> {
-			System.out.println("Add author button clicked");
-			// create address
-			Address address = new Address(authorStreetAddress.getText(), authorCityAddress.getText(), authorStateAddress.getText(), textField.getText());
-
-			// create author
-			Author author = new Author(authorFirstName.getText(), authorLastName.getText(), authorTelephone.getText(), address, authorBio.getText());
-
-			authors.add(author);
-			authorsDisplay = new JScrollPane();
-			authorsDisplay.setBounds(76, 140, 941, 94);
-			frame.getContentPane().add(authorsDisplay);
-
-			displayAuthors(da);
+			addAuthor();
+			displayAuthors();
+			clearAuthorFields();
 		});
+	}
 
+	private void clearAuthorFields() {
+		authorStreetAddress.setText("");
+		textField.setText("");
+		authorFirstName.setText("");
+		authorLastName.setText("");
+		authorTelephone.setText("");
+		authorBio.setText("");
+		authorCityAddress.setText("");
+		authorStateAddress.setText("");
+	}
+
+	private void addAuthor() {
+		System.out.println("Add author button clicked");
+		// create address
+		Address address = new Address(authorStreetAddress.getText(), authorCityAddress.getText(), authorStateAddress.getText(), textField.getText());
+		// create author
+		Author author = new Author(authorFirstName.getText(), authorLastName.getText(), authorTelephone.getText(), address, authorBio.getText());
+		authors.add(author);
+	}
+
+	private void extractAndSaveBook() {
+		DataAccess da = new DataAccessFacade();
+		int maxoutLengthText = Integer.parseInt(maxoutLength.getText());
+		int copyNumText = Integer.parseInt(copyNum.getText());
+		// create book
+		String isbnText = isbn.getText();
+		String titleText = title.getText();
+
+		this.ci.saveBook(isbnText, titleText, maxoutLengthText, copyNumText, authors);
 	}
 
 	private void clearData() {
@@ -255,10 +263,10 @@ public class AddBookWindow {
 		lblAuthors.setBounds(249, 115, 119, 14);
 		frame.getContentPane().add(lblAuthors);
 		this.authors = new ArrayList<>();
+		displayAuthors();
 	}
 
-	private void displayAuthors(DataAccess da) {
-		// Define column names for the table
+	private void displayAuthors() {
 		String[] columnNames = {"First Name", "Last Name", "Telephone", "Street Address", "City", "State", "Zip", "Bio"};
 
 		// Create a table model and set column names

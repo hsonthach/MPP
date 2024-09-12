@@ -42,10 +42,16 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
+	public void saveBook(String isbn, String title, int maxCheckoutLength, int copyNum, List<Author> authors) {
+		DataAccess da = new DataAccessFacade();
+		Book book = new Book(isbn, title, maxCheckoutLength, copyNum, authors);
+		da.saveNewBook(book);
+	}
+	@Override
 	public void checkoutBook(String memberId, String isbn) throws CheckoutException {
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public Iterable<CheckoutEntry> getCheckoutEntry(String memberId) {
 		DataAccess da = new DataAccessFacade();
