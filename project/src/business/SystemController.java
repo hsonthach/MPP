@@ -103,4 +103,12 @@ public class SystemController implements ControllerInterface {
 		DataAccess da = new DataAccessFacade();
 		return da.readBooksMap().containsKey(text);
 	}
+
+	@Override
+	public void addBookCopy(String isbnStr) {
+		DataAccess da = new DataAccessFacade();
+		Book book = da.readBooksMap().get(isbnStr);
+		book.addCopy();
+		da.saveNewBook(book);
+	}
 }

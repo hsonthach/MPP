@@ -13,4 +13,6 @@ public interface ControllerInterface {
 	public Iterable<CheckoutEntry> getCheckoutEntry(String memberId);
 
 	boolean findBookId(String text);
+
+	void addBookCopy(String isbnStr);
 }
