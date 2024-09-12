@@ -72,9 +72,9 @@ public class CheckoutABook extends JFrame implements LibWindow {
 		getContentPane().setLayout(null);
 		
 		JButton btnMain = new JButton("<== Back to Main");
-		btnMain.addActionListener(evt -> {
-			LibrarySystem.showUp(LibrarySystem.INSTANCE);
-	    });
+//		btnMain.addActionListener(evt -> {
+//			LibrarySystem.showUp(LibrarySystem.INSTANCE);
+//	    });
 		btnMain.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnMain.setBounds(10, 402, 143, 31);
 		getContentPane().add(btnMain);

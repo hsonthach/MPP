@@ -96,6 +96,7 @@ public class LoginWindow extends JFrame implements LibWindow{
                     // Successful login
                     JOptionPane.showMessageDialog(LoginWindow.this,
                             "Welcome, " + authenticatedUser.getId() + " (" + authenticatedUser.getAuthorization() + ")");
+                    LibrarySystem.INSTANCE.enableMenuItemsForUser(authenticatedUser);
                 } else {
                     // Failed login
                     JOptionPane.showMessageDialog(LoginWindow.this,
@@ -107,10 +108,31 @@ public class LoginWindow extends JFrame implements LibWindow{
         btnNewButton.setBounds(141, 84, 100, 30);
         getContentPane().add(btnNewButton);
 
+
         textField = new JTextField();
         textField.setBounds(10, 37, 150, 25);
         getContentPane().add(textField);
         textField.setColumns(10);
+        
+        JButton btnNewButton_1 = new JButton("Back to Main");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		 LoginWindow.INSTANCE.setVisible(false);
+                 LibrarySystem.INSTANCE.setVisible(true);
+        	}
+        });
+        btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnNewButton_1.setBounds(120, 144, 150, 30);
+        getContentPane().add(btnNewButton_1);
+
+//        JButton btnBackToMain = new JButton("Back to Main");
+//        btnBackToMain.setBounds(272, 496, 150, 25);
+//        frame.getContentPane().add(btnBackToMain);
+//
+//        btnBackToMain.addActionListener(evt -> {
+//            AddBookWindow.INSTANCE.frame.setVisible(false);
+//            LibrarySystem.INSTANCE.setVisible(true);
+//        });
     }
 
     public boolean isInitialized() {
