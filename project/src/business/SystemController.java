@@ -133,4 +133,18 @@ public class SystemController implements ControllerInterface {
 		}
 		return null;
 	}
+	
+
+	public void addLibraryMember(String memberId, String firstName, String lastName, String street, String city, String state, String zip,  String phoneNumber) {
+		DataAccess da = new DataAccessFacade();
+		LibraryMember member = new LibraryMember(memberId, firstName, lastName, phoneNumber, new Address(street,city,state,zip));
+		da.saveNewMember(member);
+	}
+	
+	public boolean memberIdExists(String memberId) {
+	    DataAccess da = new DataAccessFacade();
+	    HashMap<String, LibraryMember> membersMap = da.readMemberMap();
+	    return membersMap.containsKey(memberId);
+	}
+
 }

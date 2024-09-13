@@ -24,7 +24,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JPanel mainPanel;
 	JMenuBar menuBar;
 	JMenu options;
-	JMenuItem login, allBookIds, allMemberIds, checkoutABook, addBookWindow, addBookCopy;
+	JMenuItem login, allBookIds, allMemberIds, checkoutABook, addBookWindow, addBookCopy, addMemberWindow;
 	String pathToImage;
 	private boolean isInitialized = false;
 
@@ -94,6 +94,11 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		allMemberIds.setEnabled(false);  // Initially disabled
 		allMemberIds.addActionListener(new AllMemberIdsListener());
 		options.add(allMemberIds);
+		
+		addMemberWindow = new JMenuItem("Add Library Member");
+		addMemberWindow.setEnabled(false);  // Initially disabled
+		addMemberWindow.addActionListener(new SwitchScreenListener<>(AddLibraryMemberWindow.INSTANCE));
+		options.add(addMemberWindow);
 
 		checkoutABook = new JMenuItem("Checkout a book");
 		checkoutABook.setEnabled(false);  // Initially disabled
@@ -117,13 +122,14 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
 		if (role == Auth.LIBRARIAN || role == Auth.BOTH) {
 			allBookIds.setEnabled(true);
-			checkoutABook.setEnabled(true);
-			addBookCopy.setEnabled(true);
+			checkoutABook.setEnabled(true);	
 		}
 
 		if (role == Auth.ADMIN || role == Auth.BOTH) {
 			allMemberIds.setEnabled(true);
+			addBookCopy.setEnabled(true);
 			addBookWindow.setEnabled(true);
+			addMemberWindow.setEnabled(true);
 		}
 	}
 
