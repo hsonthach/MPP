@@ -55,7 +55,7 @@ public class AddLibraryMemberWindow extends JFrame implements LibWindow{
      * Create the application.
      */
     private AddLibraryMemberWindow() {
-        setTitle("Login");
+        setTitle("Add Library Member");
         setResizable(false);
         init();
     }
