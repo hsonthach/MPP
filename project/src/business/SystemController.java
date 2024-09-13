@@ -85,6 +85,7 @@ public class SystemController implements ControllerInterface {
 				}
 				LocalDate dueDate = checkoutDate.plusDays(book.getMaxCheckoutLength());
 				checkoutRecord.addEntry(checkoutDate, dueDate, bookCopy);
+				da.saveAllCheckoutRecords(checkoutRecords);
 			}
 		}
 	}

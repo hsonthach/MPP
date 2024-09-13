@@ -4,17 +4,29 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import business.Book;
+import business.BookCopy;
+import business.CheckoutEntry;
 import business.CheckoutException;
 import business.ControllerInterface;
 import business.SystemController;
 
 import javax.swing.JTextField;
 import java.awt.Color;
+
+import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -29,7 +41,9 @@ public class CheckoutABook extends JFrame implements LibWindow {
 	private boolean initialized = false;
 	private JTextField txtMemberId;
 	private JTextField txtIsbn;
-	private JTable table;
+	private JTable tableEntries;
+	private DefaultTableCellRenderer centerRenderer;
+	private DefaultTableCellRenderer leftRenderer;
 
 	/**
 	 * Launch the application.
@@ -61,6 +75,10 @@ public class CheckoutABook extends JFrame implements LibWindow {
 	public void init() {
 		if (isInitialized()) {
 			setSize(width, height);
+			tableEntries.setModel(new CheckoutEntryTableModel());
+			formatTable();
+			txtMemberId.setText("");
+			txtIsbn.setText("");
 			return;
 		}
 		isInitialized(true);
@@ -126,15 +144,24 @@ public class CheckoutABook extends JFrame implements LibWindow {
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.addActionListener(evt -> {
 			checkoutBook();
-			txtMemberId.grabFocus();
+			txtIsbn.grabFocus();
 	    });
 		btnCheckout.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnCheckout.setBounds(389, 91, 109, 31);
 		panel.add(btnCheckout);
 		
-		table = new JTable();
-		table.setBounds(10, 170, 606, 222);
-		getContentPane().add(table);
+		Border border = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+		centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setBorder(border);
+        leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(JLabel.LEFT);
+        leftRenderer.setBorder(border);
+
+		tableEntries = new JTable();
+		JScrollPane scrollPane = new JScrollPane(tableEntries);
+		scrollPane.setBounds(10, 170, 606, 222);
+		getContentPane().add(scrollPane);
 	}
 
 	@Override
@@ -154,10 +181,77 @@ public class CheckoutABook extends JFrame implements LibWindow {
 	
 	private void checkoutBook() {
 		try {
-			ci.checkoutBook(txtMemberId.getText(), txtIsbn.getText(), LocalDate.now());
+			ci.checkoutBook(txtMemberId.getText().trim(), txtIsbn.getText().trim(), LocalDate.now());
 		}
 		catch (CheckoutException ex) {
 			JOptionPane.showMessageDialog(this, ex.getMessage());
 		}
+		
+		Iterable<CheckoutEntry> entries = ci.getCheckoutEntry(txtMemberId.getText().trim());
+		CheckoutEntryTableModel tableModel = new CheckoutEntryTableModel(entries);
+		tableEntries.setModel(tableModel);
+		formatTable();
+	}
+	
+	private void formatTable() {
+        tableEntries.getColumnModel().getColumn(0).setCellRenderer(leftRenderer);
+        tableEntries.getColumnModel().getColumn(1).setCellRenderer(leftRenderer);
+        tableEntries.getColumnModel().getColumn(2).setCellRenderer(leftRenderer);
+        tableEntries.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tableEntries.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+	}
+	
+	private class CheckoutEntryTableModel extends AbstractTableModel {
+		private static final long serialVersionUID = -5597046908706605837L;
+		private static String[] columnNames = { "Copy Num", "ISBN", "Book Name", "Check Out Date", "Due Date" };
+		
+		private List<CheckoutEntry> entries;
+		
+		CheckoutEntryTableModel() {
+			entries = new ArrayList<CheckoutEntry>();
+		}
+		
+		CheckoutEntryTableModel(Iterable<CheckoutEntry> entries) {
+			this();
+			for (CheckoutEntry checkoutEntry : entries) {
+				this.entries.add(checkoutEntry);
+			}
+		}
+
+		@Override
+		public int getRowCount() {
+			return entries.size();
+		}
+
+		@Override
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			CheckoutEntry entry = this.entries.get(rowIndex);
+			BookCopy bookCopy = entry.getBookCopy();
+			Book book = bookCopy.getBook();
+			switch (columnIndex) {
+			case 0:
+				return bookCopy.getCopyNum();
+			case 1:
+				return book.getIsbn();
+			case 2:
+				return book.getTitle();
+			case 3:
+				return entry.getCheckoutDate();
+			case 4:
+				return entry.getDueDate();
+			default:
+				return null;
+			}
+		}
+		
+		@Override
+		public String getColumnName(int column) {
+            return columnNames[column];
+        }
 	}
 }
