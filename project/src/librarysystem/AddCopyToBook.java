@@ -139,6 +139,7 @@ public class AddCopyToBook extends JFrame implements LibWindow {
     @Override
     public void init() {
         frame.setVisible(true);
+        displayBooks();
     }
 
     @Override
