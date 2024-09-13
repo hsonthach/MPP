@@ -23,7 +23,10 @@ final public class Book implements Serializable {
 		this.title = title;
 		this.maxCheckoutLength = maxCheckoutLength;
 		this.authors = Collections.unmodifiableList(authors);
-		copies = new BookCopy[]{new BookCopy(this, copyNum, true)};
+		copies = new BookCopy[copyNum];
+		for (int i = 0; i < copyNum; ++i) {
+			copies[i] = new BookCopy(this, i + 1, true);
+		}
 	}
 	
 	public void updateCopies(BookCopy copy) {
