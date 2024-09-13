@@ -10,6 +10,9 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import business.LoginException;
+import business.SystemController;
 import dataaccess.Auth;
 import dataaccess.User;
 
@@ -19,16 +22,13 @@ public class LoginWindow extends JFrame implements LibWindow{
     private static final long serialVersionUID = 1L;
 
     // Instance variables
-    private int width = 640, height = 480;
+    private int width = 400, height = 240;
     private boolean initialized = false;
 
     private JPasswordField passwordField;
     private JTextField textField;
 
-    // Hardcoded users for authentication purposes
-    private User librarian = new User("librarian", "lib123", Auth.LIBRARIAN);
-    private User admin = new User("admin", "admin123", Auth.ADMIN);
-    private User both = new User("both", "both123", Auth.BOTH);
+    private SystemController controller = new SystemController();
 
     /**
      * Launch the application.
@@ -66,7 +66,7 @@ public class LoginWindow extends JFrame implements LibWindow{
         isInitialized(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 640, 480);
+        setBounds(100, 100, 400, 240);
         getContentPane().setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Username");
@@ -96,6 +96,7 @@ public class LoginWindow extends JFrame implements LibWindow{
                     // Successful login
                     JOptionPane.showMessageDialog(LoginWindow.this,
                             "Welcome, " + authenticatedUser.getId() + " (" + authenticatedUser.getAuthorization() + ")");
+                    LibrarySystem.INSTANCE.enableMenuItemsForUser(authenticatedUser);
                 } else {
                     // Failed login
                     JOptionPane.showMessageDialog(LoginWindow.this,
@@ -107,10 +108,31 @@ public class LoginWindow extends JFrame implements LibWindow{
         btnNewButton.setBounds(141, 84, 100, 30);
         getContentPane().add(btnNewButton);
 
+
         textField = new JTextField();
         textField.setBounds(10, 37, 150, 25);
         getContentPane().add(textField);
         textField.setColumns(10);
+        
+        JButton btnNewButton_1 = new JButton("Back to Main");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		 LoginWindow.INSTANCE.setVisible(false);
+                 LibrarySystem.INSTANCE.setVisible(true);
+        	}
+        });
+        btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnNewButton_1.setBounds(120, 144, 150, 30);
+        getContentPane().add(btnNewButton_1);
+
+//        JButton btnBackToMain = new JButton("Back to Main");
+//        btnBackToMain.setBounds(272, 496, 150, 25);
+//        frame.getContentPane().add(btnBackToMain);
+//
+//        btnBackToMain.addActionListener(evt -> {
+//            AddBookWindow.INSTANCE.frame.setVisible(false);
+//            LibrarySystem.INSTANCE.setVisible(true);
+//        });
     }
 
     public boolean isInitialized() {
@@ -124,13 +146,10 @@ public class LoginWindow extends JFrame implements LibWindow{
     /**
      * Authenticate user by checking username and password.
      */
-    private User authenticate(String username, String password) {
-        if (librarian.getId().equals(username) && librarian.getPassword().equals(password)) {
-            return librarian;
-        } else if (admin.getId().equals(username) && admin.getPassword().equals(password)) {
-            return admin;
-        } else if (both.getId().equals(username) && both.getPassword().equals(password)) {
-            return both;
+    private User authenticate(String username, String password)  {
+        User user = this.controller.findUserByUsernameAndPassword(username, password);
+        if (user != null) {
+            return user; // Authentication successful
         }
         return null; // Authentication failed
     }

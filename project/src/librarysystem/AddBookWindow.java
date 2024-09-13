@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class AddBookWindow extends JFrame implements LibWindow {
 
 	public static final AddBookWindow INSTANCE = new AddBookWindow();
-	private JFrame frame;
+	JFrame frame;
 	private JTextField isbn;
 	private JTextField title;
 	private JTextField maxoutLength;

@@ -17,8 +17,9 @@ public class AddCopyToBook extends JFrame implements LibWindow {
     private JFrame frame;
     private JTextField textField;
 	private SystemController controller = new SystemController();
+    private JScrollPane booksDisplay;
 
-	/**
+    /**
      * Launch the application.
      */
     public static void main(String[] args) {
@@ -50,15 +51,12 @@ public class AddCopyToBook extends JFrame implements LibWindow {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JScrollPane booksDisplay = new JScrollPane();
+        this.booksDisplay = new JScrollPane();
         booksDisplay.setBounds(94, 283, 707, 320);
         frame.getContentPane().add(booksDisplay);
 
-
         // show all books to booksDisplay
-        DataAccess da = new DataAccessFacade();
-
-        displayBooks(da, booksDisplay);
+        displayBooks();
 
         JLabel isbn = new JLabel("ISBN");
         isbn.setBounds(113, 115, 149, 44);
@@ -90,22 +88,14 @@ public class AddCopyToBook extends JFrame implements LibWindow {
             String isbnStr = textField.getText();
             this.controller.addBookCopy(isbnStr);
             JOptionPane.showMessageDialog(frame, "Added copy to book with ISBN " + isbnStr);
-            displayBooks(da, booksDisplay);
+            displayBooks();
         });
-
-
     }
 
     private boolean validateCopyInput() {
         String isbnStr = textField.getText();
         if (isbnStr.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Please enter both ISBN and number of copies");
-            return false;
-        }
-
-        // number of copies should be number
-        if (!isbnStr.matches("\\d+")) {
-            JOptionPane.showMessageDialog(frame, "Number of copies should be a number");
             return false;
         }
 
@@ -117,8 +107,8 @@ public class AddCopyToBook extends JFrame implements LibWindow {
         return true;
     }
 
-    private static void displayBooks(DataAccess da, JScrollPane booksDisplay) {
-        Collection<Book> books = da.readBooksMap().values();
+    private void displayBooks() {
+        Collection<Book> books = this.controller.getAllBooks();
 
         // Define column names for the table
         String[] columnNames = {"ISBN", "Title", "Max Checkout Length", "Number of Copies", "Authors"};

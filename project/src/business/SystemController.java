@@ -2,6 +2,7 @@ package business;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -114,5 +115,22 @@ public class SystemController implements ControllerInterface {
 		Book book = da.readBooksMap().get(isbnStr);
 		book.addCopy();
 		da.saveNewBook(book);
+	}
+
+	public Collection<Book> getAllBooks() {
+		DataAccess da = new DataAccessFacade();
+		return da.readBooksMap().values();
+	}
+
+	public User findUserByUsernameAndPassword(String username, String password){
+		DataAccess da = new DataAccessFacade();
+		HashMap<String, User> map = da.readUserMap();
+		if(map.containsKey(username)){
+			User user = map.get(username);
+			if(user.getPassword().equals(password)){
+				return user;
+			}
+		}
+		return null;
 	}
 }
