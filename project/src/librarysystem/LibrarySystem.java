@@ -127,6 +127,17 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		}
 	}
 
+	public static void showUp(JFrame instance) {
+		for(LibWindow frame: allWindows) {
+			if (frame == instance) {
+				frame.setVisible(true);
+			}
+			else {
+				frame.setVisible(false);
+			}
+		}
+	}
+
 	class LoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -181,10 +192,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LibrarySystem.hideAllWindows();
+			showUp(instance);
 			instance.init();
 			Util.centerFrameOnDesktop(instance);
-			instance.setVisible(true);
 		}
 	}
 

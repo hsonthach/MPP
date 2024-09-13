@@ -47,8 +47,8 @@ public class AddBookWindow extends JFrame implements LibWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddBookWindow window = new AddBookWindow();
-					window.frame.setVisible(true);
+					AddBookWindow window = INSTANCE;
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,6 +60,7 @@ public class AddBookWindow extends JFrame implements LibWindow {
 	 * Create the application.
 	 */
 	public AddBookWindow() {
+		setTitle("Add Book");
 		initialize();
 	}
 
@@ -67,7 +68,7 @@ public class AddBookWindow extends JFrame implements LibWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = this;
 
 		this.authors = new ArrayList<>();
 
@@ -204,8 +205,9 @@ public class AddBookWindow extends JFrame implements LibWindow {
 		displayAuthors();
 
 		btnBackToMain.addActionListener(evt -> {
-			AddBookWindow.INSTANCE.frame.setVisible(false);
-			LibrarySystem.INSTANCE.setVisible(true);
+			//AddBookWindow.INSTANCE.frame.setVisible(false);
+			//LibrarySystem.INSTANCE.setVisible(true);
+			LibrarySystem.showUp(LibrarySystem.INSTANCE);
 		});
 		// Create new book when addNewBook button is clicked
 		addNewBook.addActionListener(evt -> {
@@ -346,7 +348,7 @@ public class AddBookWindow extends JFrame implements LibWindow {
 
 	@Override
 	public void init() {
-		frame.setVisible(true);
+		//frame.setVisible(true);
 
 
 	}
