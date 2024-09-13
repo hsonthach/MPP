@@ -239,9 +239,9 @@ public class AddBookWindow extends JFrame implements LibWindow {
 			JOptionPane.showMessageDialog(frame, "Zip must be a 5 digit number");
 			return false;
 		}
-		// phone must be number and 9 digits
-		if (!authorTelephone.getText().matches("[0-9]+") || authorTelephone.getText().length() != 9) {
-			JOptionPane.showMessageDialog(frame, "Phone must be a 9 digit number");
+		// phone must be number and 10 digits
+		if (!authorTelephone.getText().matches("[0-9]+") || authorTelephone.getText().length() != 10) {
+			JOptionPane.showMessageDialog(frame, "Phone must be a 10 digit number");
 			return false;
 		}
 
