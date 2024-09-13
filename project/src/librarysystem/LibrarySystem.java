@@ -119,10 +119,16 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	// Method to enable menu items based on user permissions
 	public void enableMenuItemsForUser(User user) {
 		Auth role = user.getAuthorization();
+		allBookIds.setEnabled(false);
+		checkoutABook.setEnabled(false);
+		allMemberIds.setEnabled(false);
+		addBookCopy.setEnabled(false);
+		addBookWindow.setEnabled(false);
+		addMemberWindow.setEnabled(false);
 
 		if (role == Auth.LIBRARIAN || role == Auth.BOTH) {
 			allBookIds.setEnabled(true);
-			checkoutABook.setEnabled(true);	
+			checkoutABook.setEnabled(true);
 		}
 
 		if (role == Auth.ADMIN || role == Auth.BOTH) {
