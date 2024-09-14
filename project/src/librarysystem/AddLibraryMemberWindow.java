@@ -22,7 +22,7 @@ public class AddLibraryMemberWindow extends JFrame implements LibWindow{
     private static final long serialVersionUID = 1L;
 
     // Instance variables
-    private int width = 400, height = 240;
+    private int width = 544, height = 299;
     private boolean initialized = false;
 
     private SystemController controller = new SystemController();
@@ -71,7 +71,7 @@ public class AddLibraryMemberWindow extends JFrame implements LibWindow{
         isInitialized(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 541, 294);
+        setBounds(100, 100, 544, 299);
         getContentPane().setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Member ID");
