@@ -79,8 +79,7 @@ public class CheckoutABook extends JFrame implements LibWindow {
 	public void init() {
 		if (isInitialized()) {
 			setSize(width, height);
-			tableEntries.setModel(new CheckoutEntryTableModel());
-			formatTable();
+			setDataToTable(null);
 			txtMemberId.setText("");
 			txtIsbn.setText("");
 			return;
@@ -190,9 +189,7 @@ public class CheckoutABook extends JFrame implements LibWindow {
 			ci.checkoutBook(txtMemberId.getText().trim(), txtIsbn.getText().trim(), LocalDate.now());
 			
 			Iterable<CheckoutEntry> entries = ci.getCheckoutEntry(txtMemberId.getText().trim());
-			CheckoutEntryTableModel tableModel = new CheckoutEntryTableModel(entries);
-			tableEntries.setModel(tableModel);
-			formatTable();
+			setDataToTable(entries);
 		}
 		catch (BusinessRuleException ex) {
 			JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -200,7 +197,20 @@ public class CheckoutABook extends JFrame implements LibWindow {
 			if (controlsMap.containsKey(fieldName)) {
 				controlsMap.get(fieldName).grabFocus();
 			}
+			setDataToTable(null);
 		}
+	}
+	
+	private void setDataToTable(Iterable<CheckoutEntry> entries) {
+		CheckoutEntryTableModel tableModel;
+		if (entries == null) {
+			tableModel = new CheckoutEntryTableModel();
+		}
+		else {
+			tableModel = new CheckoutEntryTableModel(entries);
+		}
+		tableEntries.setModel(tableModel);
+		formatTable();
 	}
 	
 	private void formatTable() {
