@@ -7,9 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+
 import java.awt.Font;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import business.Book;
@@ -34,7 +37,8 @@ import javax.swing.JTable;
 public class CheckoutABook extends JFrame implements LibWindow {
 	private static final long serialVersionUID = 1L;
 	public static final CheckoutABook INSTANCE = new CheckoutABook();
-	
+
+	private HashMap<String, JComponent> controlsMap = new HashMap<String, JComponent>();
 	private ControllerInterface ci = new SystemController();
 	private int width = 0, height = 0;
 	private boolean initialized = false;
@@ -119,6 +123,9 @@ public class CheckoutABook extends JFrame implements LibWindow {
 		panel.add(txtIsbn);
 		txtIsbn.setColumns(10);
 		
+		controlsMap.put("MemberId", txtMemberId);
+		controlsMap.put("Isbn", txtIsbn);
+		
 		JLabel lblNewLabel_1 = new JLabel("Member ID");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -143,7 +150,6 @@ public class CheckoutABook extends JFrame implements LibWindow {
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.addActionListener(evt -> {
 			checkoutBook();
-			txtIsbn.grabFocus();
 	    });
 		btnCheckout.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnCheckout.setBounds(389, 91, 109, 31);
@@ -181,15 +187,19 @@ public class CheckoutABook extends JFrame implements LibWindow {
 	private void checkoutBook() {
 		try {
 			ci.checkoutBook(txtMemberId.getText().trim(), txtIsbn.getText().trim(), LocalDate.now());
+			
+			Iterable<CheckoutEntry> entries = ci.getCheckoutEntry(txtMemberId.getText().trim());
+			CheckoutEntryTableModel tableModel = new CheckoutEntryTableModel(entries);
+			tableEntries.setModel(tableModel);
+			formatTable();
 		}
 		catch (CheckoutException ex) {
 			JOptionPane.showMessageDialog(this, ex.getMessage());
+			String fieldName = ex.getFieldName();
+			if (controlsMap.containsKey(fieldName)) {
+				controlsMap.get(fieldName).grabFocus();
+			}
 		}
-		
-		Iterable<CheckoutEntry> entries = ci.getCheckoutEntry(txtMemberId.getText().trim());
-		CheckoutEntryTableModel tableModel = new CheckoutEntryTableModel(entries);
-		tableEntries.setModel(tableModel);
-		formatTable();
 	}
 	
 	private void formatTable() {
