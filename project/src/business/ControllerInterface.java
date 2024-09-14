@@ -9,7 +9,7 @@ public interface ControllerInterface {
 	public List<String> allBookIds();
 
 	void saveBook(String isbn, String title, int maxCheckoutLength, int copyNum, List<Author> authors);
-	public void checkoutBook(String memberId, String isbn, LocalDate checkoutDate) throws CheckoutException;
+	public void checkoutBook(String memberId, String isbn, LocalDate checkoutDate) throws BusinessRuleException;
 	public Iterable<CheckoutEntry> getCheckoutEntry(String memberId);
 
 	boolean findBookId(String text);

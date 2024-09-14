@@ -2,25 +2,25 @@ package business;
 
 import java.io.Serializable;
 
-public class CheckoutException extends Exception implements Serializable {
+public class BusinessRuleException extends Exception implements Serializable {
 	private static final long serialVersionUID = -4509348637887270880L;
 	
 	private String fieldName = null;
 	
-	public CheckoutException() {
+	public BusinessRuleException() {
 		super();
 	}
 	
-	public CheckoutException(String message) {
+	public BusinessRuleException(String message) {
 		super(message);
 	}
 	
-	public CheckoutException(String fieldName, String message) {
+	public BusinessRuleException(String fieldName, String message) {
 		this(message);
 		this.fieldName = fieldName;
 	}
 	
-	public CheckoutException(Throwable t) {
+	public BusinessRuleException(Throwable t) {
 		super(t);
 	}
 	

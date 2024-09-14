@@ -51,29 +51,26 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	@Override
-	public void checkoutBook(String memberId, String isbn, LocalDate checkoutDate) throws CheckoutException {
-		final String memberIdField = "MemberId";
-		final String isbnField = "Isbn";
-		
-		if (memberId == null || memberId.equals("")) throw new CheckoutException(memberIdField, "Please input the Member ID");
-		if (isbn == null || isbn.equals("")) throw new CheckoutException(isbnField, "Please input the ISBN");
+	public void checkoutBook(String memberId, String isbn, LocalDate checkoutDate) throws BusinessRuleException {
+		if (memberId == null || memberId.equals("")) throw new BusinessRuleException(Constants.MemberIdField, "Please input the Member ID");
+		if (isbn == null || isbn.equals("")) throw new BusinessRuleException(Constants.IsbnField, "Please input the ISBN");
 		
 		DataAccess da = new DataAccessFacade();
 		HashMap<String, LibraryMember> membersMap = da.readMemberMap();
 		if (!membersMap.containsKey(memberId)) {
-			throw new CheckoutException(memberIdField, "Member ID " + memberId + " not found");
+			throw new BusinessRuleException(Constants.MemberIdField, "Member ID " + memberId + " not found");
 		}
 		LibraryMember member = membersMap.get(memberId);
 		
 		HashMap<String, Book> booksMap = da.readBooksMap();
 		if (!booksMap.containsKey(isbn)) {
-			throw new CheckoutException(isbnField, "ISBN " + isbn + " not found");
+			throw new BusinessRuleException(Constants.IsbnField, "ISBN " + isbn + " not found");
 		}
 		else {
 			Book book = booksMap.get(isbn);
 			BookCopy bookCopy = book.getNextAvailableCopy();
 			if (bookCopy == null) {
-				throw new CheckoutException(isbnField, "This book does not available at the moment. Please come back later.");
+				throw new BusinessRuleException(Constants.IsbnField, "This book does not available at the moment. Please come back later.");
 			}
 			else {
 				bookCopy.changeAvailability();

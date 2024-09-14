@@ -18,7 +18,8 @@ import java.util.List;
 import business.Book;
 import business.BookCopy;
 import business.CheckoutEntry;
-import business.CheckoutException;
+import business.Constants;
+import business.BusinessRuleException;
 import business.ControllerInterface;
 import business.SystemController;
 
@@ -123,8 +124,8 @@ public class CheckoutABook extends JFrame implements LibWindow {
 		panel.add(txtIsbn);
 		txtIsbn.setColumns(10);
 		
-		controlsMap.put("MemberId", txtMemberId);
-		controlsMap.put("Isbn", txtIsbn);
+		controlsMap.put(Constants.MemberIdField, txtMemberId);
+		controlsMap.put(Constants.IsbnField, txtIsbn);
 		
 		JLabel lblNewLabel_1 = new JLabel("Member ID");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -193,7 +194,7 @@ public class CheckoutABook extends JFrame implements LibWindow {
 			tableEntries.setModel(tableModel);
 			formatTable();
 		}
-		catch (CheckoutException ex) {
+		catch (BusinessRuleException ex) {
 			JOptionPane.showMessageDialog(this, ex.getMessage());
 			String fieldName = ex.getFieldName();
 			if (controlsMap.containsKey(fieldName)) {
