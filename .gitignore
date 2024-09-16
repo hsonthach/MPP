@@ -1,6 +1,7 @@
 .idea
 out
 /**/bin/
+/**/*.class
 .vs
 /project/production
 /project/.metadata
