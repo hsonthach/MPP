@@ -25,7 +25,11 @@ public class Employee {
 		return "(" + name + ", " + salary + ")";
 	}
 
-	public boolean equals(Employee e) {
+	@Override
+	public boolean equals(Object ob) {
+		if(ob == null) return false;
+		if(ob.getClass() != getClass()) return false;
+		Employee e = (Employee)ob;
 		return e.name.equals(name) && e.salary == salary;
 	}
 }
