@@ -1,4 +1,4 @@
-package lesson7.labs.prob1.partC;
+package prob1.partC;
 
 public class Employee {
 	private String name;
@@ -31,6 +31,11 @@ public class Employee {
 		if(!(ob instanceof Employee)) return false;
 		Employee emp = (Employee)ob;
 		return emp.name.equals(name) && emp.salary == salary;
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode() + salary;
 	}
 	
 	
