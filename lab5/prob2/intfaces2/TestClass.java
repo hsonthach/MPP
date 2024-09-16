@@ -1,4 +1,4 @@
-package lesson5.lecture.intfaces2;
+package prob2.intfaces2;
 
 import java.util.List;
 
