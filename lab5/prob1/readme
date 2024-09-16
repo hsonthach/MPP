@@ -1,0 +1,5 @@
+1. prob 1 partB wrong because the the equals method is not overriden in the class, so the contains method will not work properly because it will compare the references of the objects instead of the values of the objects.
+
+2. prob 1 partC wrong because the hashCode method is not overriden in the class, so the contains method will not work properly because the containsKey method will not work properly because it will use the default hashCode method which will compare the references of the objects instead of the values of the objects.
+
+3. prob 1 partD wrong because the the visited value is unrelated to the equals method, so the equals and hashCode method behave incorrectly
