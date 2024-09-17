@@ -14,6 +14,14 @@ public class Problem2 {
 			new Product("HRV", 37000d, 2)
 		));
 		
+		//System.out.println("By Price");
+		//Collections.sort(products, (p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+		//System.out.println(products);
+		
+		//System.out.println("By Title");
+		//Collections.sort(products, (p1, p2) -> p1.getTitle().compareTo(p2.getTitle()));
+		//System.out.println(products);
+		
 		sort(products, SortBy.BYPRICE);
 		System.out.println(products);
 
