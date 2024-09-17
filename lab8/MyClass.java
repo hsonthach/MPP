@@ -1,5 +1,3 @@
-package lab8;
-
 public class MyClass {
 	int x;
 	String y;

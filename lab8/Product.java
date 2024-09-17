@@ -1,5 +1,3 @@
-package lab8;
-
 public class Product {
 	final String title;
 	final double price;
