@@ -1,3 +1,5 @@
+package lab8;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Problem1 {
 		 List<String> data = Arrays.asList("apple", "banana", "cherry");
 	     //Task 2: Take input of String and transform into Upper case
 		 transformStrings(data,(s)-> s.toUpperCase());// Output: APPLE BANANA CHERRY
-		 
+
 		 // Task 3: Check the inputs of given value is divisible by 5.
 		 List<Integer> inputs = Arrays.asList(10, 21, 12, 25, 33);
 		 printIf(inputs, (number) -> number % 5 == 0);// Output: 10 25
