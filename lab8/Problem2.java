@@ -14,19 +14,36 @@ public class Problem2 {
 			new Product("HRV", 37000d, 2)
 		));
 		
-		//System.out.println("By Price");
-		//Collections.sort(products, (p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
-		//System.out.println(products);
+		System.out.println("a. By Price");
+		Collections.sort(products, (p1, p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+		System.out.println(products);
+		System.out.println();
 		
-		//System.out.println("By Title");
-		//Collections.sort(products, (p1, p2) -> p1.getTitle().compareTo(p2.getTitle()));
-		//System.out.println(products);
-		
+		System.out.println("b. By Title");
+		Collections.sort(products, (p1, p2) -> p1.getTitle().compareTo(p2.getTitle()));
+		System.out.println(products);
+		System.out.println();
+
+		System.out.println("c. By Price");
 		sort(products, SortBy.BYPRICE);
 		System.out.println(products);
+		System.out.println();
 
+		System.out.println("c. By Title");
 		sort(products, SortBy.BYTITLE);
 		System.out.println(products);
+		System.out.println();
+		
+		System.out.println("d. By Title and Model");
+		Collections.sort(products, (p1, p2) -> {
+			int titleOrder = p1.getTitle().compareTo(p2.getTitle());
+			if (titleOrder == 0) {
+				return Integer.compare(p1.getModel(), p2.getModel());
+			}
+			return titleOrder;
+		});
+		System.out.println(products);
+		System.out.println();
 	}
 	
 	public static void sort(List<Product> products, SortBy s) {
