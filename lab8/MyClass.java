@@ -1,4 +1,4 @@
-package lab8;
+import java.util.function.Predicate;
 
 public class MyClass {
 	int x;
@@ -12,8 +12,8 @@ public class MyClass {
 	// testing method to check the equality, write a lambda to do this
 	public void myMethod(MyClass cl) {
 		// Implement
-		
-		
+		Predicate cl1 = this::equals;
+		System.out.println(cl1.test(cl));
 	}
 
 	@Override
