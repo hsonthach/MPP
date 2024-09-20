@@ -25,17 +25,8 @@ public class Main {
 			.collect(Collectors.joining(", "));
 		System.out.println(prob7a);
 		
-		String prob7b = list.stream()
-			.filter(LambdaLibrary.salaryHigherThan(100000))
-			.filter(LambdaLibrary.lastNameBeginsFrom('N'))
-			.filter(LambdaLibrary.lastNameBeginsTo('Z'))
-			.map(LambdaLibrary.selectFullname)
-			.sorted()
-			.collect(Collectors.joining(", "));
+		String prob7b = LambdaLibrary.employeesInSalaryRangeAndLastName.apply(list, 100000, 'N', 'Z');
 		System.out.println(prob7b);
-		
-		String prob7b2 = LambdaLibrary.employeesInSalaryRangeAndLastName.apply(list);
-		System.out.println(prob7b2);
 	}
 
 }
