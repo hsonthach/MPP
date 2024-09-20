@@ -3,6 +3,7 @@ package lab9.prob4;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -55,14 +56,24 @@ public static void main(String args[]){
 	Human[] list = { new Human("Joe",35,"Male"), new Human("Jane",45,"Female"), new Human("John",30,"Male")};
 	
     // Query 1  : Print only Female candidates names
-	
+	Stream.of(list).filter(h -> h.getGender().equals("Female"))
+		.map(Human::getName)
+		.forEach(System.out::println);
 
     /* Query 2 : Create an object for the Type of Human class by choosing suitable Interface for the three  constructors using ClassName::new. 
                  Then print the object status */
+	Function<String, Human> nameConst = Human::new;
+	System.out.println(nameConst.apply("Alice"));
+	
+	BiFunction<String, Integer, Human> nameAndAgeConst = Human::new;
+	System.out.println(nameAndAgeConst.apply("Bob", 23));
+	
+	TriFunction<String, Integer, String, Human> nameAndAgeAndGenderConst = Human::new;
+	System.out.println(nameAndAgeAndGenderConst.apply("Peter", 28, "Male"));
  
 	// Query 3 : Count the male candidates whose age is more than 30
-       
-    
+    long c = Stream.of(list).filter(h -> h.getGender().equals("Male") && h.getAge() > 30).count();
+    System.out.println(c);
    }
 
 
